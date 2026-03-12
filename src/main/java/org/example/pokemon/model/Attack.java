@@ -17,5 +17,10 @@ public class Attack {
         this.category = category;
         this.secondaryEffect = secondaryEffect;
     }
-
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public int getDamage() { return damage; }
+    public String getType() { return type; }
+    public String getCategory() { return category; }
+    public String getSecondaryEffect() { return secondaryEffect; }
 }
