@@ -24,3 +24,5 @@ public class Attack {
     public String getCategory() { return category; }
     public String getSecondaryEffect() { return secondaryEffect; }
 }
+
+
