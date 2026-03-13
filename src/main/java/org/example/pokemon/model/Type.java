@@ -1,32 +1,49 @@
 package org.example.pokemon.model;
 
-import org.example.pokemon.model.TypeInteractions;
+import java.util.HashMap;
+import java.util.Map;
 
-//package org.example.pokemon.model;
-//
-//public class Type {
-//    private String name;
-//
-//    public Type(String name) {
-//        this.name = name;
-//    }
-//}
 public class Type {
-    private String nom;
-    private TypeInteractions interactions;
+    private String name;
+    private Map<String, Double> effectiveness;
 
-    public Type(String nom) {
-        this.nom = nom;
-        this.interactions = new TypeInteractions(); // Utilise le constructeur par défaut
+    public enum TypeName {
+        ACIER, EAU, ELECTRIK, FEU, PLANTE, PSY, ROCHE, SOL, NORMAL, VOL,
+        POISON, INSECTE, SPECTRE, DRAGON, TENEBRES, FEE, GLACE, COMBAT
+    }
+
+    public Type(String name) {
+        this.name = name;
+        this.effectiveness = new HashMap<>();
+    }
+
+    public static Type fromString(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return null;
+        }
+
+        return new Type(name);
     }
 
     public void addEfficacity(String nomTypeAdverse, double multiplicateur) {
-        // Elle prend l'info et la donne à la "Map" qui est dans TypeInteraction
-        this.interactions.setEffectiveness(nomTypeAdverse, multiplicateur);
+        this.effectiveness.put(nomTypeAdverse.toUpperCase(), multiplicateur);
     }
 
-    public String getNom() {
-        return nom;
+    public double getDamageMultiplier(String enemyTypeName) {
+        return effectiveness.getOrDefault(enemyTypeName.toUpperCase(), 1.0);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     public TypeInteractions getInteractions() {
