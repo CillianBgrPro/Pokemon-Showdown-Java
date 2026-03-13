@@ -28,4 +28,8 @@ public class Type {
     public String getNom() {
         return nom;
     }
+
+    public TypeInteractions getInteractions() {
+        return interactions;
+    }
 }
