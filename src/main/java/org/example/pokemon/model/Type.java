@@ -8,8 +8,14 @@ public class Type {
     private Map<String, Double> effectiveness;
 
     public enum TypeName {
-        ACIER, EAU, ELECTRIK, FEU, PLANTE, PSY, ROCHE, SOL, NORMAL, VOL,
-        POISON, INSECTE, SPECTRE, DRAGON, TENEBRES, FEE, GLACE, COMBAT
+        Acier,
+        Eau,
+        Électrik,
+        Feu,
+        Plante,
+        Psy,
+        Roche,
+        Sol
     }
 
     public Type(String name) {
@@ -44,9 +50,5 @@ public class Type {
     @Override
     public String toString() {
         return name;
-    }
-
-    public TypeInteractions getInteractions() {
-        return interactions;
     }
 }
