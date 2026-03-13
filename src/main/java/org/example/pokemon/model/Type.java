@@ -20,7 +20,7 @@ public class Type {
         this.interactions = new TypeInteractions(); // Utilise le constructeur par défaut
     }
 
-    public void ajouterEfficacite(String nomTypeAdverse, double multiplicateur) {
+    public void addEfficacity(String nomTypeAdverse, double multiplicateur) {
         // Elle prend l'info et la donne à la "Map" qui est dans TypeInteraction
         this.interactions.setEffectiveness(nomTypeAdverse, multiplicateur);
     }
