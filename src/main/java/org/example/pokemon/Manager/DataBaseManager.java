@@ -8,19 +8,26 @@ public class DataBaseManager {
     private static final String USER = "root";
     private static final String PASS = "root";
 
-    public DataBaseManager() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    private static Connection connection;
 
+    public static Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            try {
+                connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            } catch (SQLException e) {
+                System.err.println("Erreur de connexion ou SQL : " + e.getMessage());
+            }
+        }
+        return connection;
+    }
+
+    public DataBaseManager() {
         String query = "SELECT * FROM Pokemons " +
                 "JOIN Pokemon_Moves ON Pokemons.id = Pokemon_Moves.pokemon_id " +
                 "JOIN Moves ON Moves.id = Pokemon_Moves.move_id";
 
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-             Statement stmt = connection.createStatement();
+        try (Connection conn = DataBaseManager.getConnection();
+             Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             System.out.println("--- Liste des Pokemons et leurs attaques ---");
