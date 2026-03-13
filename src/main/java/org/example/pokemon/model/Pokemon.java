@@ -1,28 +1,34 @@
 package org.example.pokemon.model;
 
+import java.util.ArrayList;
+
 public class Pokemon {
     private int id;
     private String name;
     private int hp;
-    private int attack;
+    private int attackStat;
+    private ArrayList<SpecialAttack> attacks;
     private int defense;
-    private int specialAttack;
+    private int attackSpeStat;
+    private ArrayList<SpecialAttack> attackSpes;
     private int specialDefense;
     private int speed;
-    private String type1;
-    private String type2;
+    private Type type1;
+    private Type type2;
     private String imageUrl;
 
-    public Pokemon(int id, String name, int hp, int attack, int defense,
-                   int specialAttack, int specialDefense,
-                   int speed, String type1, String type2, String imageUrl) {
+    public Pokemon(int id, String name, int hp, ArrayList<SpecialAttack> attacks, int defense,
+                   int attackStat, int attackSpeStat,ArrayList<SpecialAttack> attackSpes , int specialDefense,
+                   int speed, Type type1, Type type2, String imageUrl) {
 
         this.id = id;
         this.name = name;
         this.hp = hp;
-        this.attack = attack;
+        this.attacks = attacks;
+        this.attackStat = attackStat;
+        this.attackSpeStat =attackSpeStat;
         this.defense = defense;
-        this.specialAttack = specialAttack;
+        this.attackSpes = attackSpes;
         this.specialDefense = specialDefense;
         this.speed = speed;
         this.type1 = type1;
@@ -34,15 +40,16 @@ public class Pokemon {
     public int getId() { return id; }
     public String getName() { return name; }
     public int getHp() { return hp; }
-    public int getAttack() { return attack; }
+    public ArrayList<SpecialAttack> getAttack() { return attacks; }
     public int getDefense() { return defense; }
-    public int getSpecialAttack() { return specialAttack; }
+    public ArrayList<SpecialAttack> getSpecialAttack() { return attackSpes; }
     public int getSpecialDefense() { return specialDefense; }
     public int getSpeed() { return speed; }
-    public String getType1() { return type1; }
-    public String getType2() { return type2; }
+    public Type getType1() { return type1; }
+    public Type getType2() { return type2; }
     public String getImageUrl() { return imageUrl; }
-
+    public int getAttackSpeStat() {return attackSpeStat;}
+    public int getAttackStat() {return attackStat;}
     public void setHp(int hp) {
         this.hp = Math.max(0, hp);
     }
