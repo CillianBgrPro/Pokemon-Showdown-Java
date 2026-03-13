@@ -1,7 +1,6 @@
 package org.example.pokemon.model;
 
 import org.example.pokemon.Manager.DataBaseManager;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -9,16 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PokemonRepositories {
+
     public List<Pokemon> getAllPokemon() {
         List<Pokemon> list = new ArrayList<>();
         String query = "SELECT * FROM pokemon";
 
-        try{
-            Connection conn = DataBaseManager.getConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+        try (Connection conn = DataBaseManager.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
+                String type1Name = rs.getString("type1");
+                String type2Name = rs.getString("type2");
+
                 Pokemon p = new Pokemon(
                         rs.getInt("id"),
                         rs.getString("pokemon_name"),
@@ -28,18 +30,18 @@ public class PokemonRepositories {
                         rs.getInt("sp_attack"),
                         rs.getInt("sp_defense"),
                         rs.getInt("speed"),
-                        rs.getString("type1"),
-                        rs.getString("type2"),
+                        Type.fromString(type1Name),
+                        Type.fromString(type2Name),
                         rs.getString("sprite_path")
                 );
+
                 list.add(p);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération des Pokémon : " + e.getMessage());
             e.printStackTrace();
         }
+
         return list;
     }
-
-
 }
