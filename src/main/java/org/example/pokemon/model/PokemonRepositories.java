@@ -9,9 +9,9 @@ import java.util.List;
 
 public class PokemonRepositories {
 
-    public List<Pokemon> getAllPokemon() {
+    public List<Pokemon> findAll() {
         List<Pokemon> list = new ArrayList<>();
-        String query = "SELECT * FROM pokemon";
+        String query = "SELECT * FROM Pokemons";
 
         try (Connection conn = DataBaseManager.getConnection();
              Statement stmt = conn.createStatement();
@@ -30,8 +30,8 @@ public class PokemonRepositories {
                         rs.getInt("sp_attack"),
                         rs.getInt("sp_defense"),
                         rs.getInt("speed"),
-                        Type.fromString(type1Name),
-                        Type.fromString(type2Name),
+                        new Type(type1Name),
+                        type2Name != null ? new Type(type2Name) : null,
                         rs.getString("sprite_path")
                 );
 

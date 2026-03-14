@@ -9,7 +9,7 @@
 
     <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
         <image>
-            <Image url="@pictures/home_background.png" />
+            <Image url="@../pictures/home_background.png" />
         </image>
     </ImageView>
 
