@@ -17,6 +17,9 @@ public class DamageCalculator {
 
         if (category.getCategory().equalsIgnoreCase("PHYSICAL")) {
             atkStat = attack.getAttack();
+            if (attack.getStatut() != null) {
+                atkStat *= attack.getStatut().getCoeffAttack();
+            }
             defStat = defense.getDefense();
         } else {
             atkStat = attack.getSpecialAttack();

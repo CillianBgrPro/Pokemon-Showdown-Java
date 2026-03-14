@@ -12,6 +12,7 @@ public class Pokemon {
     private Type type1;
     private Type type2;
     private String imageUrl;
+    private AbstractStatuts statut;
 
     public Pokemon(int id, String name, int hp, int attack, int defense,
                    int specialAttack, int specialDefense,
@@ -42,8 +43,10 @@ public class Pokemon {
     public Type getType1() { return type1; }
     public Type getType2() { return type2; }
     public String getImageUrl() { return imageUrl; }
-
     public void setHp(int hp) {
         this.hp = Math.max(0, hp);
     }
+    public void setSpeed(int speed) {this.speed = speed;}
+    public AbstractStatuts getStatut() {return statut;}
+    public void setStatut(AbstractStatuts statuts) {this.statut = statuts;}
 }
