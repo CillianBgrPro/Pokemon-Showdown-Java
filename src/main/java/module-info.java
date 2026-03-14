@@ -7,9 +7,11 @@ module org.example.pokemon {
     opens org.example.pokemon.logic to javafx.fxml;
     opens org.example.pokemon.Manager to javafx.fxml;
     opens org.example.pokemon.model to javafx.fxml;
+    opens org.example.pokemon.controller to javafx.fxml;
 
     exports org.example.pokemon;
     exports org.example.pokemon.logic;
     exports org.example.pokemon.Manager;
     exports org.example.pokemon.model;
+    exports org.example.pokemon.controller;
 }
