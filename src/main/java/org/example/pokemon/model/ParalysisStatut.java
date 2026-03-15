@@ -1,8 +1,8 @@
 package org.example.pokemon.model;
 
 public class ParalysisStatut extends AbstractStatuts{
-    public ParalysisStatut(String name) {
-        super(name);
+    public ParalysisStatut() {
+        super(StatutName.Paralysie.name());
     }
 
     protected boolean speedReduced = false;
@@ -16,6 +16,11 @@ public class ParalysisStatut extends AbstractStatuts{
         if(!speedReduced){
             pokemon.setSpeed(pokemon.getSpeed()/2);
             speedReduced = true;
+        }
+        if (Math.random() < 0.25) {
+            pokemon.canAttack = false;
+        } else {
+            pokemon.canAttack = true;
         }
     }
 }

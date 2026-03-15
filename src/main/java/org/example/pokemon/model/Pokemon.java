@@ -13,6 +13,7 @@ public class Pokemon {
     private Type type2;
     private String imageUrl;
     private AbstractStatuts statut;
+    public boolean canAttack = true;
 
     public Pokemon(int id, String name, int hp, int attack, int defense,
                    int specialAttack, int specialDefense,
@@ -49,4 +50,31 @@ public class Pokemon {
     public void setSpeed(int speed) {this.speed = speed;}
     public AbstractStatuts getStatut() {return statut;}
     public void setStatut(AbstractStatuts statuts) {this.statut = statuts;}
+    public static Pokemon getFastest(Pokemon p1, Pokemon p2){
+        if(p1.getSpeed() > p2.getSpeed()){
+            return p1;
+        } else if (p2.getSpeed()> p1.getSpeed()) {
+            return p2;
+        }
+        else {
+            if (Math.random() < 0.5) {
+                return p1;
+            } else {
+                return p2;
+            }
+        }
+    }
+    public static Pokemon getSlowest(Pokemon p1, Pokemon p2) {
+        if (p1.getSpeed() > p2.getSpeed()) {
+            return p2;
+        } else if (p2.getSpeed() > p1.getSpeed()) {
+            return p1;
+        } else {
+            if (Math.random() < 0.5) {
+                return p1;
+            } else {
+                return p2;
+            }
+        }
+    }
 }
