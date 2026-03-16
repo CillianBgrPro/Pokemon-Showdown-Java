@@ -2,12 +2,16 @@ module org.example.pokemon {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires jdk.jdi;
+    requires mysql.connector.j;
 
     opens org.example.pokemon to javafx.fxml;
     opens org.example.pokemon.logic to javafx.fxml;
     opens org.example.pokemon.Manager to javafx.fxml;
     opens org.example.pokemon.model to javafx.fxml;
     opens org.example.pokemon.controller to javafx.fxml;
+    opens org.example.pokemon.model.items to javafx.fxml;
+    opens org.example.pokemon.status to javafx.fxml;
 
     exports org.example.pokemon;
     exports org.example.pokemon.logic;
@@ -15,5 +19,6 @@ module org.example.pokemon {
     exports org.example.pokemon.model;
     exports org.example.pokemon.controller;
     exports org.example.pokemon.status;
-    opens org.example.pokemon.status to javafx.fxml;
+    exports org.example.pokemon.model.items;
+
 }
