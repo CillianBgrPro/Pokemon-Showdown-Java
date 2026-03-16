@@ -17,15 +17,18 @@ public class HomeController {
     @FXML
     private void handleStart() {
         try {
+            System.out.println("Tentative de changement de scène...");
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pokemon/view/team-builder-view.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) btnCreateTeam.getScene().getWindow();
-
             stage.setScene(new Scene(root, 800, 600));
             stage.show();
 
         } catch (IOException e) {
+            System.err.println("Erreur de chargement du FXML : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

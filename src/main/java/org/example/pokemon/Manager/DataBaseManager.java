@@ -32,6 +32,8 @@ public class DataBaseManager {
 
             System.out.println("--- Liste des Pokemons et leurs attaques ---");
 
+
+
             while(rs.next()){
                 System.out.println("Pokémon : " + rs.getString("pokemon_name"));
                 System.out.println("HP : " + rs.getInt("hp"));

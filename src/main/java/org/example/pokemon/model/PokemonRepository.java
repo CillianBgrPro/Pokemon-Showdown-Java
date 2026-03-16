@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokemonRepositories {
+public class PokemonRepository {
 
     public List<Pokemon> findAll() {
         List<Pokemon> list = new ArrayList<>();

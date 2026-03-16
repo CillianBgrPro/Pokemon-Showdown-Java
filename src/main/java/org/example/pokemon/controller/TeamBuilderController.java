@@ -3,38 +3,51 @@ package org.example.pokemon.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import org.example.pokemon.model.AbstractItem;
+import org.example.pokemon.model.ItemRepository;
 import org.example.pokemon.model.Pokemon;
-import org.example.pokemon.model.PokemonRepositories;
+import org.example.pokemon.model.PokemonRepository;
 
 import java.util.List;
 
 public class TeamBuilderController {
 
-    @FXML private ListView<String> availableListView;
-    @FXML private ListView<String> teamListView;
+    @FXML private ListView<Pokemon> availableListView;
+    @FXML private ListView<Pokemon> teamListView;
     @FXML private Button btnStartFight;
+    @FXML private ComboBox<AbstractItem> itemComboBox;
+    @FXML private TextArea itemDescriptionArea;
 
-    private PokemonRepositories repository = new PokemonRepositories();
-    private ObservableList<String> teamItems = FXCollections.observableArrayList();
+    private PokemonRepository repository = new PokemonRepository();
+    private ItemRepository itemRepo = new ItemRepository();
+
+    private ObservableList<Pokemon> teamItems = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
         List<Pokemon> allPokemons = repository.findAll();
-
-        ObservableList<String> names = FXCollections.observableArrayList();
-        for (Pokemon p : allPokemons) {
-            names.add(p.getName());
-        }
-        availableListView.setItems(names);
-
+        availableListView.setItems(FXCollections.observableArrayList(allPokemons));
+        itemComboBox.setItems(FXCollections.observableArrayList(itemRepo.findAll()));
         teamListView.setItems(teamItems);
+
+        itemComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal,
+                                                                             newVal) -> {
+            if (newVal != null) {
+                itemDescriptionArea.setText(newVal.getDescription());
+
+                Pokemon selectedPoke = teamListView.getSelectionModel().getSelectedItem();
+                if (selectedPoke != null) {
+                    selectedPoke.setHeldItem(newVal);
+                    System.out.println(selectedPoke.getName() + " tient maintenant : " + newVal.getName());
+                }
+            }
+        });
     }
 
     @FXML
     private void handleAddPokemon() {
-        String selected = availableListView.getSelectionModel().getSelectedItem();
+        Pokemon selected = availableListView.getSelectionModel().getSelectedItem();
         if (selected != null && teamItems.size() < 3) {
             teamItems.add(selected);
             updateStartButton();
@@ -43,7 +56,7 @@ public class TeamBuilderController {
 
     @FXML
     private void handleRemovePokemon() {
-        String selected = teamListView.getSelectionModel().getSelectedItem();
+        Pokemon selected = teamListView.getSelectionModel().getSelectedItem();
         if (selected != null) {
             teamItems.remove(selected);
             updateStartButton();
@@ -56,6 +69,6 @@ public class TeamBuilderController {
 
     @FXML
     private void handleStartFight() {
-        System.out.println("Lancement du combat avec : " + teamItems);
+        System.out.println("Lancement du combat !");
     }
 }
