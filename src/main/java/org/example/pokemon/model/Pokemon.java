@@ -81,4 +81,8 @@ public class Pokemon {
             }
         }
     }
+
+    public void addAttack(Attack charge) {
+        this.attacks.add(charge);
+    }
 }

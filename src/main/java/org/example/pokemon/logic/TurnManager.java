@@ -10,7 +10,7 @@ import static org.example.pokemon.model.Pokemon.getSlowest;
 
 public class TurnManager {
 
-    public void gameTurn(Pokemon p1, Pokemon p2){
+    public static void gameTurn(Pokemon p1, Pokemon p2, Attack a1, Attack a2 ){
         if (p1.getStatut() != null) {
             p1.getStatut().effectStatut(p1);
         }
@@ -19,19 +19,15 @@ public class TurnManager {
         }
         Pokemon fastest = getFastest(p1,p2);
         Pokemon slowest = getSlowest(p1,p2);
-        Type solType = new Type("SOL");
-        Attack charge = new Attack(1, "Charge", 40,
-                solType, "PHYSICAL", "NONE");
-        int damage = calculate(fastest,slowest, charge);
 
-        executeAttack(fastest,slowest,charge);
+        executeAttack(fastest, slowest, (fastest == p1) ? a1 : a2);
 
         if (slowest.getHp() > 0){
-            executeAttack(slowest,fastest,charge);
+            executeAttack(slowest, fastest, (slowest == p1) ? a1 : a2);
         }
     }
 
-    private void executeAttack(Pokemon attacker, Pokemon target, Attack attack) {
+    private static void executeAttack(Pokemon attacker, Pokemon target, Attack attack) {
 
         if (attacker.getHp() > 0 && attacker.canAttack) {
             int damage = calculate(attacker, target, attack);
