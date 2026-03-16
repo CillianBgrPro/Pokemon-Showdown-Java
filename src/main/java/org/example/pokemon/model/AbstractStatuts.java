@@ -24,3 +24,4 @@ public abstract class AbstractStatuts {
 
     public abstract void effectStatut(Pokemon pokemon);
 }
+
