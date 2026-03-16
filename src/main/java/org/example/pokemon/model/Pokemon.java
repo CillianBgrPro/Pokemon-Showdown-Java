@@ -1,5 +1,7 @@
 package org.example.pokemon.model;
 
+import java.util.ArrayList;
+
 public class Pokemon {
     private int id;
     private String name;
@@ -14,6 +16,7 @@ public class Pokemon {
     private String imageUrl;
     private AbstractStatuts statut;
     public boolean canAttack = true;
+    private ArrayList<Attack> attacks = new ArrayList<Attack>();
 
     public Pokemon(int id, String name, int hp, int attack, int defense,
                    int specialAttack, int specialDefense,
@@ -50,6 +53,7 @@ public class Pokemon {
     public void setSpeed(int speed) {this.speed = speed;}
     public AbstractStatuts getStatut() {return statut;}
     public void setStatut(AbstractStatuts statuts) {this.statut = statuts;}
+    public ArrayList<Attack> getAttacks(){ return attacks;}
     public static Pokemon getFastest(Pokemon p1, Pokemon p2){
         if(p1.getSpeed() > p2.getSpeed()){
             return p1;
