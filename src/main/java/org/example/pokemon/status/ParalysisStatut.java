@@ -1,6 +1,9 @@
-package org.example.pokemon.model;
+package org.example.pokemon.status;
 
-public class ParalysisStatut extends AbstractStatuts{
+import org.example.pokemon.model.AbstractStatuts;
+import org.example.pokemon.model.Pokemon;
+
+public class ParalysisStatut extends AbstractStatuts {
     public ParalysisStatut() {
         super(StatutName.Paralysie.name());
     }

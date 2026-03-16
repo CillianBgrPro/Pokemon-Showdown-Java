@@ -1,4 +1,7 @@
-package org.example.pokemon.model;
+package org.example.pokemon.status;
+
+import org.example.pokemon.model.AbstractStatuts;
+import org.example.pokemon.model.Pokemon;
 
 public class PoisonStatut extends AbstractStatuts {
 

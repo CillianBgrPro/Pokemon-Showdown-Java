@@ -1,6 +1,9 @@
-package org.example.pokemon.model;
+package org.example.pokemon.status;
 
-public class BurnStatut extends AbstractStatuts{
+import org.example.pokemon.model.AbstractStatuts;
+import org.example.pokemon.model.Pokemon;
+
+public class BurnStatut extends AbstractStatuts {
 
     public BurnStatut(){
         super(StatutName.Burn.name());

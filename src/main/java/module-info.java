@@ -14,4 +14,6 @@ module org.example.pokemon {
     exports org.example.pokemon.Manager;
     exports org.example.pokemon.model;
     exports org.example.pokemon.controller;
+    exports org.example.pokemon.status;
+    opens org.example.pokemon.status to javafx.fxml;
 }
