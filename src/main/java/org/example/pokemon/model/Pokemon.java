@@ -20,7 +20,7 @@ public class Pokemon {
     private AbstractStatuts statut;
     private AbstractItem heldItem;
 
-    private List<Attack> currentMoves = new ArrayList<>();
+    private List<Attack> attacks = new ArrayList<>();
 
     public boolean canAttack = true;
 
@@ -42,21 +42,65 @@ public class Pokemon {
         this.imageUrl = imageUrl;
     }
 
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public int getHp() { return hp; }
-    public int getMaxHp() { return maxHp; }
-    public int getAttack() { return attack; }
-    public int getDefense() { return defense; }
-    public int getSpecialAttack() { return specialAttack; }
-    public int getSpecialDefense() { return specialDefense; }
-    public int getSpeed() { return speed; }
-    public Type getType1() { return type1; }
-    public Type getType2() { return type2; }
-    public String getImageUrl() { return imageUrl; }
-    public AbstractItem getHeldItem() { return heldItem; }
-    public AbstractStatuts getStatut() { return statut; }
-    public List<Attack> getCurrentMoves() { return currentMoves; }
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getSpecialAttack() {
+        return specialAttack;
+    }
+
+    public int getSpecialDefense() {
+        return specialDefense;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public Type getType1() {
+        return type1;
+    }
+
+    public Type getType2() {
+        return type2;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public AbstractItem getHeldItem() {
+        return heldItem;
+    }
+
+    public AbstractStatuts getStatut() {
+        return statut;
+    }
+
+    public List<Attack> getAttacks() {
+        return attacks;
+    }
 
 
     public void setHp(int hp) {
@@ -77,10 +121,10 @@ public class Pokemon {
 
     public void setMove(int index, Attack move) {
         if (index >= 0 && index < 4) {
-            if (index < currentMoves.size()) {
-                currentMoves.set(index, move);
+            if (index < attacks.size()) {
+                attacks.set(index, move);
             } else {
-                currentMoves.add(move);
+                attacks.add(move);
             }
         }
     }
@@ -112,6 +156,8 @@ public class Pokemon {
 
     public void addAttack(Attack charge) {
         this.attacks.add(charge);
+    }
+
     @Override
     public String toString() {
         return name;
