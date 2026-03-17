@@ -1,5 +1,7 @@
 package org.example.pokemon.model;
 
+import java.util.ArrayList;
+
 public class Pokemon {
     private int id;
     private String name;
@@ -14,6 +16,7 @@ public class Pokemon {
     private String imageUrl;
     private AbstractStatuts statut;
     private AbstractItem heldItem;
+    private ArrayList<Attack> attacks;
     public boolean canAttack = true;
 
     public Pokemon(int id, String name, int hp, int attack, int defense,
@@ -46,6 +49,7 @@ public class Pokemon {
     public Type getType2() { return type2; }
     public String getImageUrl() { return imageUrl; }
     public AbstractItem getHeldItem() {return heldItem;}
+    public ArrayList<Attack> getAttacks(){return attacks;}
 
     public void setHp(int hp) {
         this.hp = Math.max(0, hp);
@@ -90,6 +94,8 @@ public class Pokemon {
 
     public void addAttack(Attack charge) {
         this.attacks.add(charge);
+    }
+
     @Override
     public String toString() {
         return name;
