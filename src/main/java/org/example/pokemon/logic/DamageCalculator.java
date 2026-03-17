@@ -47,8 +47,6 @@ public class DamageCalculator {
     }
 
     private static double getEffectiveness(Attack move, Pokemon defender) {
-        // On demande au type de l'attaque son efficacité sur le défenseur
-        // (C'est ici qu'on utilise ce que ton TypeRepository a chargé)
         double multiplier = move.getType().getDamageMultiplier(defender.getType1().getName());
 
         if (defender.getType2() != null) {

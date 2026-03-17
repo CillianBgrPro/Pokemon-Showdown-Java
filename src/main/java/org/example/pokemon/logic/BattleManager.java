@@ -2,39 +2,31 @@ package org.example.pokemon.logic;
 
 import org.example.pokemon.model.Attack;
 import org.example.pokemon.model.Pokemon;
-
 import java.util.Random;
 
-import static org.example.pokemon.logic.TurnManager.gameTurn;
-
 public class BattleManager {
-   private Pokemon player;
-   private Pokemon opponent;
-   private boolean isBattleOver;
+    private Pokemon playerActive;
+    private Pokemon opponentActive;
+    private Random random = new Random();
 
-   public BattleManager(Pokemon player, Pokemon opponent){
-       this.player = player;
-       this.opponent = opponent;
-       this.isBattleOver = false;
-   }
-
-   public void Battle(Attack playerAttack){
-        if (isBattleOver){
-            return;
-        }
-       Attack opponentAttack = opponent.getAttacks().get(
-               new Random().nextInt(opponent.getAttacks().size())
-       );
-        gameTurn(player,opponent,playerAttack,opponentAttack);
-        checkWinCondition();
-   }
-    private void checkWinCondition() {
-        if (player.getHp() <= 0 || opponent.getHp() <= 0) {
-            isBattleOver = true;
-
-        }
+    public BattleManager(Pokemon player, Pokemon opponent) {
+        this.playerActive = player;
+        this.opponentActive = opponent;
     }
 
-    public boolean getIsBattleOver(){return isBattleOver;}
-}
+    public void executeTurn(Attack playerChoice) {
+        int randomIndex = random.nextInt(opponentActive.getAttacks().size());
+        Attack opponentChoice = opponentActive.getAttacks().get(randomIndex);
 
+        TurnManager.gameTurn(playerActive, opponentActive, playerChoice, opponentChoice);
+        applyEndOfTurnEffects();
+    }
+
+    private void applyEndOfTurnEffects() {
+        if (playerActive.getHeldItem() != null) playerActive.getHeldItem().onTurnEnd(playerActive);
+        if (opponentActive.getHeldItem() != null) opponentActive.getHeldItem().onTurnEnd(opponentActive);
+    }
+
+    public Pokemon getPlayerActive() { return playerActive; }
+    public Pokemon getOpponentActive() { return opponentActive; }
+}

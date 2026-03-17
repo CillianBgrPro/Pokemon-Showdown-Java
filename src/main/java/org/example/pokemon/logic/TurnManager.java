@@ -2,52 +2,45 @@ package org.example.pokemon.logic;
 
 import org.example.pokemon.model.Attack;
 import org.example.pokemon.model.Pokemon;
-import org.example.pokemon.model.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.example.pokemon.logic.DamageCalculator.calculate;
-import static org.example.pokemon.model.Pokemon.getFastest;
-import static org.example.pokemon.model.Pokemon.getSlowest;
 
 public class TurnManager {
 
-    public static void gameTurn(Pokemon p1, Pokemon p2, Attack a1, Attack a2 ){
-        if (p1.getStatut() != null) {
-            p1.getStatut().effectStatut(p1);
-        }
-        if (p2.getStatut() != null) {
-            p2.getStatut().effectStatut(p2);
+    public static List<String> gameTurn(Pokemon p1, Pokemon p2, Attack a1, Attack a2) {
+        List<String> logs = new ArrayList<>();
+
+        if (p1.getStatut() != null) p1.getStatut().effectStatut(p1);
+        if (p2.getStatut() != null) p2.getStatut().effectStatut(p2);
+
+        Pokemon fastest = Pokemon.getFastest(p1, p2);
+        Pokemon slowest = Pokemon.getSlowest(p1, p2);
+        Attack fastAtk = (fastest == p1) ? a1 : a2;
+        Attack slowAtk = (slowest == p1) ? a1 : a2;
+
+        logs.add(executeAttack(fastest, slowest, fastAtk));
+
+        if (!slowest.isKO()) {
+            logs.add(executeAttack(slowest, fastest, slowAtk));
+        } else {
+            logs.add(slowest.getName() + " est KO !");
         }
 
-        if (p1.getHp() <= 0 || p2.getHp() <= 0) {
-            System.out.println("Un Pokémon est KO à cause de son statut !");
-            return;
-        }
-        Pokemon fastest = getFastest(p1,p2);
-        Pokemon slowest = getSlowest(p1,p2);
-
-        executeAttack(fastest, slowest, (fastest == p1) ? a1 : a2);
-
-        if (slowest.getHp() > 0){
-            executeAttack(slowest, fastest, (slowest == p1) ? a1 : a2);
-        }
+        return logs;
     }
 
-    private static void executeAttack(Pokemon attacker, Pokemon target, Attack attack) {
-
-        if (attacker.getHp() > 0 && attacker.canAttack) {
-            int damage = calculate(attacker, target, attack);
-            target.setHp(target.getHp() - damage);
-
-            System.out.println(attacker.getName() + " utilise " + attack.getName() + " : " + damage + " degats.");
-            if (attack.getSecondaryEffect() != null && target.getHp() >= 0) {
-                attack.getSecondaryEffect().apply(attacker, target, damage);
-            }
-        }
-        else if (attacker.getHp() > 0 && !attacker.canAttack) {
-            System.out.println(attacker.getName() + " est paralyse !");
+    private static String executeAttack(Pokemon attacker, Pokemon target, Attack attack) {
+        if (!attacker.canAttack) {
+            attacker.canAttack = true; // reset pour le prochain tour
+            return attacker.getName() + " est paralysé et ne peut pas attaquer !";
         }
 
-        attacker.canAttack = true;
+        int damage = calculate(attacker, target, attack);
+        target.setHp(target.getHp() - damage);
+
+        String efficiency = "";
+        return attacker.getName() + " utilise " + attack.getName() + " et inflige " + damage + " dégâts." + efficiency;
     }
-
 }

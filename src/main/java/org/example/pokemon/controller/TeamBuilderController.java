@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import org.example.pokemon.model.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TeamBuilderController {
@@ -18,15 +20,13 @@ public class TeamBuilderController {
     @FXML private ListView<Pokemon> availableListView;
     @FXML private ListView<Pokemon> teamListView;
     @FXML private Button btnStartFight;
-
     @FXML private ComboBox<AbstractItem> itemComboBox;
     @FXML private TextArea itemDescriptionArea;
-
     @FXML private ComboBox<Attack> move1Combo, move2Combo, move3Combo, move4Combo;
 
     private PokemonRepository pokemonRepo = new PokemonRepository();
     private ItemRepository itemRepo = new ItemRepository();
-    private AttackRepository attackRepo = new AttackRepository(); // Tu dois créer cette classe
+    private AttackRepository attackRepo = new AttackRepository();
 
     private ObservableList<Pokemon> teamItems = FXCollections.observableArrayList();
 
@@ -36,13 +36,11 @@ public class TeamBuilderController {
         itemComboBox.setItems(FXCollections.observableArrayList(itemRepo.findAll()));
         teamListView.setItems(teamItems);
 
-        teamListView.getSelectionModel().selectedItemProperty().addListener((obs,
-                                                                             oldVal, newVal) -> {
+        teamListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             updateConfigurationUI(newVal);
         });
 
-        itemComboBox.getSelectionModel().selectedItemProperty().addListener((obs,
-                                                                             oldVal, newVal) -> {
+        itemComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             Pokemon selected = teamListView.getSelectionModel().getSelectedItem();
             if (selected != null && newVal != null) {
                 selected.setHeldItem(newVal);
@@ -70,6 +68,11 @@ public class TeamBuilderController {
         move2Combo.setItems(movesObs);
         move3Combo.setItems(movesObs);
         move4Combo.setItems(movesObs);
+
+        if (!p.getAttacks().isEmpty()) {
+            if (p.getAttacks().size() > 0) move1Combo.getSelectionModel().select(p.getAttacks().get(0));
+            if (p.getAttacks().size() > 1) move2Combo.getSelectionModel().select(p.getAttacks().get(1));
+        }
 
         if (p.getHeldItem() != null) {
             itemComboBox.getSelectionModel().select(p.getHeldItem());
@@ -127,36 +130,31 @@ public class TeamBuilderController {
 
     @FXML
     private void handleStartFight() {
-        if(teamItems.size() < 3){
-            return;
-        }
-
-        Pokemon selectedLeader = teamListView.getSelectionModel().getSelectedItem();
-        if (selectedLeader == null) {
-            selectedLeader = teamItems.get(0);
-            System.out.println("Aucun leader choisi, on envoie " + selectedLeader.getName() + " par défaut.");
-        } else {
-            System.out.println("Combat lancé avec " + selectedLeader.getName() + " en première ligne !");
-        }
+        if(teamItems.size() < 3) return;
 
         try {
-            System.out.println("Tentative de changement de scène...");
+            List<Pokemon> allPossible = pokemonRepo.findAll();
+            Collections.shuffle(allPossible);
+            List<Pokemon> cpuTeam = new ArrayList<>();
+            for(int i=0; i<3; i++) {
+                Pokemon p = allPossible.get(i);
+                List<Attack> moves = attackRepo.findMovesByPokemonId(p.getId());
+                for(int j=0; j<Math.min(4, moves.size()); j++) p.setMove(j, moves.get(j));
+                cpuTeam.add(p);
+            }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pokemon/view/battle-view.fxml"));
             Parent root = loader.load();
 
             BattleController battleController = loader.getController();
-            // On lui envoie notre Pokémon leader (et un adversaire de test)
-            battleController.setBattleData(selectedLeader, teamItems.get(1));
+            battleController.setBattleData(new ArrayList<>(teamItems), cpuTeam);
+
             Stage stage = (Stage) btnStartFight.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("Erreur de chargement du FXML : " + e.getMessage());
             e.printStackTrace();
         }
-
-        System.out.println("Lancement du combat avec une équipe de " + teamItems.size() + " Pokémon !");
     }
 }

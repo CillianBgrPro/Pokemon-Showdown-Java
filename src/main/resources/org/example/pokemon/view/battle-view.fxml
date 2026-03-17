@@ -1,20 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.image.ImageView?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.pokemon.controller.BattleController"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pokemon.controller.BattleController">
 
-    <Label fx:id="playerPokemonName" text="Nom du joueur" />
-    <Label fx:id="opponentPokemonName" text="Nom de l'adversaire" />
-    <ImageView fx:id="playerPokemonImage"/>
-    <ImageView fx:id="opponentPokemonImage"/>
+    <top>
+        <HBox alignment="CENTER" prefHeight="250.0" spacing="100.0" style="-fx-background-color: linear-gradient(to bottom, #87CEEB, #90EE90);">
+            <children>
+                <VBox alignment="CENTER" spacing="10.0">
+                    <Label fx:id="playerPokemonName" text="Joueur" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+                    <ImageView fx:id="playerPokemonImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                    <ProgressBar fx:id="playerHpBar" prefWidth="150.0" progress="1.0" style="-fx-accent: #4CAF50;" />
+                    <Label fx:id="playerHpLabel" text="100/100" textFill="WHITE" />
+                </VBox>
 
-</AnchorPane>
+                <VBox alignment="CENTER" spacing="10.0">
+                    <Label fx:id="cpuPokemonName" text="Adversaire" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+                    <ImageView fx:id="cpuPokemonImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                    <ProgressBar fx:id="cpuHpBar" prefWidth="150.0" progress="1.0" style="-fx-accent: #4CAF50;" />
+                    <Label fx:id="cpuHpLabel" text="100/100" textFill="WHITE" />
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </HBox>
+    </top>
+
+    <center>
+        <TextArea fx:id="battleLog" editable="false" prefHeight="150.0" prefWidth="760.0" style="-fx-control-inner-background: #000; -fx-text-fill: #00FF00; -fx-font-family: 'Courier New';" wrapText="true">
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+            </BorderPane.margin>
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextArea>
+    </center>
+
+    <bottom>
+        <GridPane hgap="10.0" prefHeight="120.0" vgap="10.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button fx:id="move1" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" onAction="#handleAttack" text="Attaque 1" />
+                <Button fx:id="move2" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" onAction="#handleAttack" text="Attaque 2" GridPane.columnIndex="1" />
+                <Button fx:id="move3" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" onAction="#handleAttack" text="Attaque 3" GridPane.rowIndex="1" />
+                <Button fx:id="move4" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" onAction="#handleAttack" text="Attaque 4" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+            </padding>
+        </GridPane>
+    </bottom>
+</BorderPane>
