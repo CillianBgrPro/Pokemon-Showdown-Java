@@ -20,7 +20,7 @@ public class Pokemon {
     private AbstractStatuts statut;
     private AbstractItem heldItem;
 
-    private List<Attack> currentMoves = new ArrayList<>();
+    private List<Attack> attacks = new ArrayList<>();
 
     public boolean canAttack = true;
 
@@ -56,7 +56,7 @@ public class Pokemon {
     public String getImageUrl() { return imageUrl; }
     public AbstractItem getHeldItem() { return heldItem; }
     public AbstractStatuts getStatut() { return statut; }
-    public List<Attack> getCurrentMoves() { return currentMoves; }
+    public List<Attack> getAttacks() { return attacks; }
 
 
     public void setHp(int hp) {
@@ -77,10 +77,10 @@ public class Pokemon {
 
     public void setMove(int index, Attack move) {
         if (index >= 0 && index < 4) {
-            if (index < currentMoves.size()) {
-                currentMoves.set(index, move);
+            if (index < attacks.size()) {
+                attacks.set(index, move);
             } else {
-                currentMoves.add(move);
+                attacks.add(move);
             }
         }
     }
@@ -111,7 +111,7 @@ public class Pokemon {
     }
 
     public void addAttack(Attack charge) {
-        this.currentMoves.add(charge);
+        this.attacks.add(charge);
     }
     @Override
     public String toString() {
