@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/21"
+<BorderPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pokemon.controller.TeamBuilderController">
 
     <top>
@@ -22,34 +22,54 @@
             <HBox alignment="CENTER" spacing="40.0" style="-fx-padding: 10;">
                 <VBox spacing="10.0">
                     <Label text="Pokémon disponibles :" />
-                    <ListView fx:id="availableListView" prefHeight="300.0" prefWidth="250.0" />
+                    <ListView fx:id="availableListView" prefHeight="250.0" prefWidth="250.0" />
                     <Button onAction="#handleAddPokemon" prefWidth="250.0" text="Ajouter à l'équipe"
                             style="-fx-background-color: #2a75bb; -fx-text-fill: white;" />
                 </VBox>
 
                 <VBox spacing="10.0">
                     <Label text="Votre équipe :" />
-                    <ListView fx:id="teamListView" prefHeight="300.0" prefWidth="250.0" />
+                    <ListView fx:id="teamListView" prefHeight="250.0" prefWidth="250.0" />
                     <Button onAction="#handleRemovePokemon" prefWidth="250.0" text="Retirer"
                             style="-fx-background-color: #e3350d; -fx-text-fill: white;" />
                 </VBox>
             </HBox>
 
-            <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 10; -fx-border-color: #cccccc; -fx-border-radius: 5;">
-                <Label text="Objet pour le Pokémon sélectionné :" style="-fx-font-weight: bold;" />
+            <VBox alignment="CENTER" spacing="15.0" style="-fx-padding: 20; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-background-color: white; -fx-max-width: 800;">
+                <Label text="Configuration du Pokémon sélectionné" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+
+                <HBox alignment="CENTER" spacing="15.0">
+                    <VBox spacing="5.0">
+                        <ComboBox fx:id="move1Combo" prefWidth="180.0" promptText="Attaque 1" />
+                        <ComboBox fx:id="move2Combo" prefWidth="180.0" promptText="Attaque 2" />
+                    </VBox>
+                    <VBox spacing="5.0">
+                        <ComboBox fx:id="move3Combo" prefWidth="180.0" promptText="Attaque 3" />
+                        <ComboBox fx:id="move4Combo" prefWidth="180.0" promptText="Attaque 4" />
+                    </VBox>
+                </HBox>
+
+                <Separator style="-fx-padding: 10 0;" />
+
                 <HBox alignment="CENTER" spacing="20.0">
-                    <ComboBox fx:id="itemComboBox" prefWidth="200.0" promptText="Choisir un objet" />
-                    <TextArea fx:id="itemDescriptionArea" prefHeight="60.0" prefWidth="300.0"
-                              promptText="Description de l'objet..." editable="false" wrapText="true" />
+                    <VBox spacing="5.0">
+                        <Label text="Objet tenu :" />
+                        <ComboBox fx:id="itemComboBox" prefWidth="200.0" promptText="Choisir un objet" />
+                    </VBox>
+                    <VBox spacing="5.0">
+                        <Label text="Description :" />
+                        <TextArea fx:id="itemDescriptionArea" prefHeight="60.0" prefWidth="350.0"
+                                  promptText="Description de l'objet..." editable="false" wrapText="true" />
+                    </VBox>
                 </HBox>
             </VBox>
         </VBox>
     </center>
 
     <bottom>
-        <HBox alignment="CENTER" style="-fx-padding: 20;">
-            <Button fx:id="btnStartFight" onAction="#handleStartFight" prefHeight="50.0" prefWidth="250.0" text="DÉMARRER LE COMBAT"
-                    disable="true" style="-fx-font-weight: bold; -fx-background-color: #4CAF50; -fx-text-fill: white;" />
+        <HBox alignment="CENTER" style="-fx-padding: 30;">
+            <Button fx:id="btnStartFight" onAction="#handleStartFight" prefHeight="50.0" prefWidth="300.0" text="DÉMARRER LE COMBAT"
+                    disable="true" style="-fx-font-weight: bold; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16;" />
         </HBox>
     </bottom>
 </BorderPane>

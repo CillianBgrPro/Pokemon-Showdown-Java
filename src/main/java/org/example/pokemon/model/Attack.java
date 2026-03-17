@@ -24,6 +24,11 @@ public class Attack {
     public Type getType() { return type; }
     public String getCategory() { return category; }
     public String getSecondaryEffect() { return secondaryEffect; }
+
+    @Override
+    public String toString() {
+        return name + " (" + type.getName() + ")";
+    }
 }
 
 
