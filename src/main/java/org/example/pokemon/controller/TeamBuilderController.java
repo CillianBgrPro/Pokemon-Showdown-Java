@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.example.pokemon.model.AbstractItem;
-import org.example.pokemon.model.ItemRepository;
-import org.example.pokemon.model.Pokemon;
-import org.example.pokemon.model.PokemonRepository;
+import org.example.pokemon.model.*;
 
 import java.util.List;
 
@@ -16,40 +13,96 @@ public class TeamBuilderController {
     @FXML private ListView<Pokemon> availableListView;
     @FXML private ListView<Pokemon> teamListView;
     @FXML private Button btnStartFight;
+
     @FXML private ComboBox<AbstractItem> itemComboBox;
     @FXML private TextArea itemDescriptionArea;
 
-    private PokemonRepository repository = new PokemonRepository();
+    @FXML private ComboBox<Attack> move1Combo, move2Combo, move3Combo, move4Combo;
+
+    private PokemonRepository pokemonRepo = new PokemonRepository();
     private ItemRepository itemRepo = new ItemRepository();
+    private AttackRepository attackRepo = new AttackRepository(); // Tu dois créer cette classe
 
     private ObservableList<Pokemon> teamItems = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        List<Pokemon> allPokemons = repository.findAll();
-        availableListView.setItems(FXCollections.observableArrayList(allPokemons));
+        availableListView.setItems(FXCollections.observableArrayList(pokemonRepo.findAll()));
         itemComboBox.setItems(FXCollections.observableArrayList(itemRepo.findAll()));
         teamListView.setItems(teamItems);
 
-        itemComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal,
-                                                                             newVal) -> {
-            if (newVal != null) {
-                itemDescriptionArea.setText(newVal.getDescription());
+        teamListView.getSelectionModel().selectedItemProperty().addListener((obs,
+                                                                             oldVal, newVal) -> {
+            updateConfigurationUI(newVal);
+        });
 
-                Pokemon selectedPoke = teamListView.getSelectionModel().getSelectedItem();
-                if (selectedPoke != null) {
-                    selectedPoke.setHeldItem(newVal);
-                    System.out.println(selectedPoke.getName() + " tient maintenant : " + newVal.getName());
-                }
+        itemComboBox.getSelectionModel().selectedItemProperty().addListener((obs,
+                                                                             oldVal, newVal) -> {
+            Pokemon selected = teamListView.getSelectionModel().getSelectedItem();
+            if (selected != null && newVal != null) {
+                selected.setHeldItem(newVal);
+                itemDescriptionArea.setText(newVal.getDescription());
             }
         });
+
+        setupMoveComboHandler(move1Combo, 0);
+        setupMoveComboHandler(move2Combo, 1);
+        setupMoveComboHandler(move3Combo, 2);
+        setupMoveComboHandler(move4Combo, 3);
+    }
+
+    private void updateConfigurationUI(Pokemon p) {
+        if (p == null) {
+            disableConfiguration(true);
+            return;
+        }
+        disableConfiguration(false);
+
+        List<Attack> learnableMoves = attackRepo.findMovesByPokemonId(p.getId());
+        ObservableList<Attack> movesObs = FXCollections.observableArrayList(learnableMoves);
+
+        move1Combo.setItems(movesObs);
+        move2Combo.setItems(movesObs);
+        move3Combo.setItems(movesObs);
+        move4Combo.setItems(movesObs);
+
+        if (p.getHeldItem() != null) {
+            itemComboBox.getSelectionModel().select(p.getHeldItem());
+            itemDescriptionArea.setText(p.getHeldItem().getDescription());
+        } else {
+            itemComboBox.getSelectionModel().clearSelection();
+            itemDescriptionArea.setText("");
+        }
+    }
+
+    private void setupMoveComboHandler(ComboBox<Attack> combo, int slot) {
+        combo.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            Pokemon selected = teamListView.getSelectionModel().getSelectedItem();
+            if (selected != null && newVal != null) {
+                selected.setMove(slot, newVal);
+            }
+        });
+    }
+
+    private void disableConfiguration(boolean disable) {
+        move1Combo.setDisable(disable);
+        move2Combo.setDisable(disable);
+        move3Combo.setDisable(disable);
+        move4Combo.setDisable(disable);
+        itemComboBox.setDisable(disable);
     }
 
     @FXML
     private void handleAddPokemon() {
         Pokemon selected = availableListView.getSelectionModel().getSelectedItem();
         if (selected != null && teamItems.size() < 3) {
-            teamItems.add(selected);
+            Pokemon copy = new Pokemon(
+                    selected.getId(), selected.getName(), selected.getHp(),
+                    selected.getAttack(), selected.getDefense(), selected.getSpecialAttack(),
+                    selected.getSpecialDefense(), selected.getSpeed(),
+                    selected.getType1(), selected.getType2(), selected.getImageUrl()
+            );
+            teamItems.add(copy);
             updateStartButton();
         }
     }
@@ -64,11 +117,11 @@ public class TeamBuilderController {
     }
 
     private void updateStartButton() {
-        btnStartFight.setDisable(teamItems.size() != 3);
+        btnStartFight.setDisable(teamItems.size() < 3);
     }
 
     @FXML
     private void handleStartFight() {
-        System.out.println("Lancement du combat !");
+        System.out.println("Lancement du combat avec une équipe de " + teamItems.size() + " Pokémon !");
     }
 }
