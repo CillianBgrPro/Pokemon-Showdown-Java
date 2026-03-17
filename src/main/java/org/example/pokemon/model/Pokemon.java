@@ -85,7 +85,6 @@ public class Pokemon {
         }
     }
 
-
     public boolean isKO() {
         return this.hp <= 0;
     }
