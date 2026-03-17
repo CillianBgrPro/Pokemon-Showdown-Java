@@ -38,16 +38,24 @@ public class DamageCalculator {
             atkStat = attacker.getSpecialAttack();
             defStat = defender.getSpecialDefense();
         }
-
-        double typeMultiplier = defender.getType1().getDamageMultiplier(move.getType().getName());
-        if (defender.getType2() != null) {
-            typeMultiplier *= defender.getType2().getDamageMultiplier(move.getType().getName());
-        }
-
+        double typeMultiplier = getEffectiveness(move, defender);
         double randomFactor = 0.85 + (1.0 - 0.85) * random.nextDouble();
 
         double damage = move.getDamage() * (atkStat / defStat) * typeMultiplier * randomFactor * itemMultiplier;
 
         return (int) Math.round(damage);
     }
+
+    private static double getEffectiveness(Attack move, Pokemon defender) {
+        // On demande au type de l'attaque son efficacité sur le défenseur
+        // (C'est ici qu'on utilise ce que ton TypeRepository a chargé)
+        double multiplier = move.getType().getDamageMultiplier(defender.getType1().getName());
+
+        if (defender.getType2() != null) {
+            multiplier *= move.getType().getDamageMultiplier(defender.getType2().getName());
+        }
+
+        return multiplier;
+    }
+
 }

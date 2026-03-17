@@ -3,9 +3,14 @@ package org.example.pokemon.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.example.pokemon.model.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public class TeamBuilderController {
@@ -122,6 +127,36 @@ public class TeamBuilderController {
 
     @FXML
     private void handleStartFight() {
+        if(teamItems.size() < 3){
+            return;
+        }
+
+        Pokemon selectedLeader = teamListView.getSelectionModel().getSelectedItem();
+        if (selectedLeader == null) {
+            selectedLeader = teamItems.get(0);
+            System.out.println("Aucun leader choisi, on envoie " + selectedLeader.getName() + " par défaut.");
+        } else {
+            System.out.println("Combat lancé avec " + selectedLeader.getName() + " en première ligne !");
+        }
+
+        try {
+            System.out.println("Tentative de changement de scène...");
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pokemon/view/battle-view.fxml"));
+            Parent root = loader.load();
+
+            BattleController battleController = loader.getController();
+            // On lui envoie notre Pokémon leader (et un adversaire de test)
+            battleController.setBattleData(selectedLeader, teamItems.get(1));
+            Stage stage = (Stage) btnStartFight.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
+
+        } catch (IOException e) {
+            System.err.println("Erreur de chargement du FXML : " + e.getMessage());
+            e.printStackTrace();
+        }
+
         System.out.println("Lancement du combat avec une équipe de " + teamItems.size() + " Pokémon !");
     }
 }

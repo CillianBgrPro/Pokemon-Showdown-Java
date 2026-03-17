@@ -17,6 +17,11 @@ public class TurnManager {
         if (p2.getStatut() != null) {
             p2.getStatut().effectStatut(p2);
         }
+
+        if (p1.getHp() <= 0 || p2.getHp() <= 0) {
+            System.out.println("Un Pokémon est KO à cause de son statut !");
+            return;
+        }
         Pokemon fastest = getFastest(p1,p2);
         Pokemon slowest = getSlowest(p1,p2);
 
@@ -34,6 +39,9 @@ public class TurnManager {
             target.setHp(target.getHp() - damage);
 
             System.out.println(attacker.getName() + " utilise " + attack.getName() + " : " + damage + " degats.");
+            if (attack.getSecondaryEffect() != null && target.getHp() >= 0) {
+                attack.getSecondaryEffect().apply(attacker, target, damage);
+            }
         }
         else if (attacker.getHp() > 0 && !attacker.canAttack) {
             System.out.println(attacker.getName() + " est paralyse !");

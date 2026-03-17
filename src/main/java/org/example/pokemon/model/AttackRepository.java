@@ -1,11 +1,14 @@
 package org.example.pokemon.model;
 
 import org.example.pokemon.Manager.DataBaseManager;
+import org.example.pokemon.model.effects.AbstractEffect;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AttackRepository {
+    private final EffectsRepository effectRepository = new EffectsRepository();
     public List<Attack> findMovesByPokemonId(int pokemonId) {
         List<Attack> moves = new ArrayList<>();
         String query = "SELECT m.* FROM Moves m " +
@@ -19,13 +22,17 @@ public class AttackRepository {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
+                String moveName = rs.getString("move_name");
+
+                // 2. On récupère l'objet Effet grâce au nom de l'attaque
+                AbstractEffect effect = effectRepository.getEffectByMoveName(moveName);
                 moves.add(new Attack(
                         rs.getInt("id"),
                         rs.getString("move_name"),
                         rs.getInt("power"),
                         new Type(rs.getString("type_name")),
                         rs.getString("category"),
-                        rs.getString("secondary_effect")
+                        effect
                 ));
             }
         } catch (SQLException e) {
