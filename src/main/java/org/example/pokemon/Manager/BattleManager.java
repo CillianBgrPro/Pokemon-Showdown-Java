@@ -1,4 +1,4 @@
-package org.example.pokemon.logic;
+package org.example.pokemon.Manager;
 
 import org.example.pokemon.model.Attack;
 import org.example.pokemon.model.Pokemon;
