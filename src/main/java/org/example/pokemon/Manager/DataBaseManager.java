@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class DataBaseManager {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:8889/Pokemon_Showdown";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/Pokemon_Showdown";
     private static final String USER = "root";
-    private static final String PASS = "root";
+    private static final String PASS = "";
 
     private static Connection connection;
 
