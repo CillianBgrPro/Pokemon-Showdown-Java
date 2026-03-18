@@ -11,7 +11,7 @@
         <VBox>
             <HBox style="-fx-padding: 10; -fx-background-color: #222222;">
                 <Button fx:id="btnBack" onAction="#handleBackToHome" text="⬅ Menu Principal"
-                        style="-fx-background-color: #e3350d; -fx-text-fill: white; -fx-font-weight: bold;" />
+                        style="-fx-background-color: #e3350d; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
             </HBox>
 
             <HBox alignment="CENTER" prefHeight="250.0" spacing="100.0"
