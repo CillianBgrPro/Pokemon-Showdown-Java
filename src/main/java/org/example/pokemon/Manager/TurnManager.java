@@ -2,10 +2,9 @@ package org.example.pokemon.Manager;
 
 import org.example.pokemon.model.Attack;
 import org.example.pokemon.model.Pokemon;
+import org.example.pokemon.logic.DamageCalculator;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.example.pokemon.logic.DamageCalculator.calculate;
 
 public class TurnManager {
 
@@ -24,8 +23,6 @@ public class TurnManager {
 
         if (!slowest.isKO()) {
             logs.add(executeAttack(slowest, fastest, slowAtk));
-        } else {
-            logs.add(slowest.getName() + " est KO !");
         }
 
         return logs;
@@ -33,14 +30,30 @@ public class TurnManager {
 
     private static String executeAttack(Pokemon attacker, Pokemon target, Attack attack) {
         if (!attacker.canAttack) {
-            attacker.canAttack = true; // reset pour le prochain tour
+            attacker.canAttack = true;
             return attacker.getName() + " est paralysé et ne peut pas attaquer !";
         }
 
-        int damage = calculate(attacker, target, attack);
+        int damage = DamageCalculator.calculate(attacker, target, attack);
         target.setHp(target.getHp() - damage);
 
-        String efficiency = "";
-        return attacker.getName() + " utilise " + attack.getName() + " et inflige " + damage + " dégâts." + efficiency;
+        double mult = target.getType1().getDamageMultiplier(attack.getType().getName());
+        if (target.getType2() != null) mult *= target.getType2().getDamageMultiplier(attack.getType().getName());
+
+        String effectiveness = "";
+        if (mult > 1) effectiveness = " C'est très efficace !";
+        else if (mult < 1 && mult > 0) effectiveness = " Ce n'est pas très efficace...";
+        else if (mult == 0) effectiveness = " Ça n'a aucun effet...";
+
+        String log = attacker.getName() + " utilise " + attack.getName() + " !" + effectiveness + " (" + damage + " dégâts)";
+
+        if (attack.getSecondaryEffect() != null) {
+            attack.getSecondaryEffect().apply(attacker, target, damage);
+        }
+        if (target.getHeldItem() != null) {
+            target.getHeldItem().onTakeDamage(target, damage);
+        }
+
+        return log;
     }
 }

@@ -4,6 +4,7 @@ module org.example.pokemon {
     requires java.sql;
     requires jdk.jdi;
     requires mysql.connector.j;
+    requires javafx.media;
 
     opens org.example.pokemon to javafx.fxml;
     opens org.example.pokemon.logic to javafx.fxml;

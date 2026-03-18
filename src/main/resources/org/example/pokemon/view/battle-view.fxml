@@ -6,7 +6,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pokemon.controller.BattleController">
+<BorderPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pokemon.controller.BattleController">
     <top>
         <VBox>
             <HBox style="-fx-padding: 10; -fx-background-color: #222222;">
@@ -39,18 +39,31 @@
     </top>
 
     <center>
-        <TextArea fx:id="battleLog" editable="false" prefHeight="150.0" prefWidth="760.0" style="-fx-control-inner-background: #000; -fx-text-fill: #00FF00; -fx-font-family: 'Courier New';" wrapText="true">
-            <BorderPane.margin>
-                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-            </BorderPane.margin>
-            <font>
-                <Font size="14.0" />
-            </font>
-        </TextArea>
+        <VBox spacing="10.0">
+
+            <TextArea fx:id="battleLog" editable="false" prefHeight="150.0" style="-fx-control-inner-background: #000; -fx-text-fill: #00FF00; -fx-font-family: 'Courier New';" wrapText="true">
+                <VBox.margin>
+                    <Insets left="20.0" right="20.0" top="10.0" />
+                </VBox.margin>
+            </TextArea>
+
+            <HBox alignment="CENTER" spacing="15.0" style="-fx-background-color: #444444; -fx-padding: 10; -fx-background-radius: 5;">
+                <children>
+                    <Label text="Changer :" textFill="WHITE" style="-fx-font-weight: bold;" />
+                    <Button fx:id="btnPoke0" onAction="#handleSwitch" text="Poke 1" prefWidth="120.0" style="-fx-cursor: hand;" />
+                    <Button fx:id="btnPoke1" onAction="#handleSwitch" text="Poke 2" prefWidth="120.0" style="-fx-cursor: hand;" />
+                    <Button fx:id="btnPoke2" onAction="#handleSwitch" text="Poke 3" prefWidth="120.0" style="-fx-cursor: hand;" />
+                </children>
+                <VBox.margin>
+                    <Insets left="20.0" right="20.0" />
+                </VBox.margin>
+            </HBox>
+        </VBox>
     </center>
 
     <bottom>
-        <GridPane hgap="10.0" prefHeight="120.0" vgap="10.0" BorderPane.alignment="CENTER">
+
+        <GridPane hgap="10.0" prefHeight="120.0" vgap="10.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -60,10 +73,10 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="move1" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" onAction="#handleAttack" text="Attaque 1" />
-                <Button fx:id="move2" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" onAction="#handleAttack" text="Attaque 2" GridPane.columnIndex="1" />
-                <Button fx:id="move3" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" onAction="#handleAttack" text="Attaque 3" GridPane.rowIndex="1" />
-                <Button fx:id="move4" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" onAction="#handleAttack" text="Attaque 4" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Button fx:id="move1" maxWidth="Infinity" maxHeight="Infinity" onAction="#handleAttack" text="Attaque 1" style="-fx-cursor: hand;" />
+                <Button fx:id="move2" maxWidth="Infinity" maxHeight="Infinity" onAction="#handleAttack" text="Attaque 2" GridPane.columnIndex="1" style="-fx-cursor: hand;" />
+                <Button fx:id="move3" maxWidth="Infinity" maxHeight="Infinity" onAction="#handleAttack" text="Attaque 3" GridPane.rowIndex="1" style="-fx-cursor: hand;" />
+                <Button fx:id="move4" maxWidth="Infinity" maxHeight="Infinity" onAction="#handleAttack" text="Attaque 4" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-cursor: hand;" />
             </children>
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />

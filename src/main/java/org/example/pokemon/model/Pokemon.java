@@ -109,11 +109,12 @@ public class Pokemon {
         }
     }
 
-    public void addAttack(Attack charge) {
-        this.attacks.add(charge);
-    }
     @Override
     public String toString() {
         return name;
+    }
+
+    public void addAttack(Attack charge) {
+        this.attacks.add(charge);
     }
 }
