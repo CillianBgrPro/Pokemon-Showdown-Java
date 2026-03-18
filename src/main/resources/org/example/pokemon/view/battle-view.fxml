@@ -7,28 +7,35 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pokemon.controller.BattleController">
-
     <top>
-        <HBox alignment="CENTER" prefHeight="250.0" spacing="100.0" style="-fx-background-color: linear-gradient(to bottom, #87CEEB, #90EE90);">
-            <children>
-                <VBox alignment="CENTER" spacing="10.0">
-                    <Label fx:id="playerPokemonName" text="Joueur" style="-fx-font-weight: bold; -fx-font-size: 16;" />
-                    <ImageView fx:id="playerPokemonImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-                    <ProgressBar fx:id="playerHpBar" prefWidth="150.0" progress="1.0" style="-fx-accent: #4CAF50;" />
-                    <Label fx:id="playerHpLabel" text="100/100" textFill="WHITE" />
-                </VBox>
+        <VBox>
+            <HBox style="-fx-padding: 10; -fx-background-color: #222222;">
+                <Button fx:id="btnBack" onAction="#handleBackToHome" text="⬅ Menu Principal"
+                        style="-fx-background-color: #e3350d; -fx-text-fill: white; -fx-font-weight: bold;" />
+            </HBox>
 
-                <VBox alignment="CENTER" spacing="10.0">
-                    <Label fx:id="cpuPokemonName" text="Adversaire" style="-fx-font-weight: bold; -fx-font-size: 16;" />
-                    <ImageView fx:id="cpuPokemonImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-                    <ProgressBar fx:id="cpuHpBar" prefWidth="150.0" progress="1.0" style="-fx-accent: #4CAF50;" />
-                    <Label fx:id="cpuHpLabel" text="100/100" textFill="WHITE" />
-                </VBox>
-            </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-        </HBox>
+            <HBox alignment="CENTER" prefHeight="250.0" spacing="100.0"
+                  style="-fx-background-color: linear-gradient(to bottom, #87CEEB, #90EE90);">
+                <children>
+                    <VBox alignment="CENTER" spacing="10.0">
+                        <Label fx:id="playerPokemonName" text="Joueur" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+                        <ImageView fx:id="playerPokemonImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                        <ProgressBar fx:id="playerHpBar" prefWidth="150.0" progress="1.0" style="-fx-accent: #4CAF50;" />
+                        <Label fx:id="playerHpLabel" text="100/100" textFill="WHITE" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" spacing="10.0">
+                        <Label fx:id="cpuPokemonName" text="Adversaire" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+                        <ImageView fx:id="cpuPokemonImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                        <ProgressBar fx:id="cpuHpBar" prefWidth="150.0" progress="1.0" style="-fx-accent: #4CAF50;" />
+                        <Label fx:id="cpuHpLabel" text="100/100" textFill="WHITE" />
+                    </VBox>
+                </children>
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+            </HBox>
+        </VBox>
     </top>
 
     <center>

@@ -157,4 +157,8 @@ public class TeamBuilderController {
             e.printStackTrace();
         }
     }
+
+    private void showPokemonStats(){
+
+    }
 }
